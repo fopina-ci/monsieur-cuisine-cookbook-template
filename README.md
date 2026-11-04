@@ -17,11 +17,11 @@ The [CLI Action guide](https://github.com/fopina/monsieur-cuisine-cli/blob/main/
 Create a dedicated login session for this cookbook, then pipe its token directly into GitHub with the CLI and GitHub CLI:
 
 ```sh
-uvx --from 'git+https://github.com/fopina/monsieur-cuisine-cli.git@main' monsieur-cuisine-cli --session-file github-cookbook-session.json auth login
-uvx --from 'git+https://github.com/fopina/monsieur-cuisine-cli.git@main' monsieur-cuisine-cli --session-file github-cookbook-session.json auth get-token | gh secret set MC_API_ACCESS_TOKEN --repo OWNER/REPOSITORY
+uvx monsieur-cuisine-cli --session-file github-cookbook-session.json auth login
+uvx monsieur-cuisine-cli --session-file github-cookbook-session.json auth get-token | gh secret set MC_API_ACCESS_TOKEN --repo OWNER/REPOSITORY
 ```
 
-The `--from ...@main` source makes the new token command available before its next PyPI release; after release, the shorter `uvx monsieur-cuisine-cli ...` form will work. Replace `OWNER/REPOSITORY` with the new repository. `gh` must be authenticated and have access to it. Keep this session file for the cookbook workflow; refreshing the API token rotates it and invalidates the old value. The action writes a rotated token back to `MC_API_ACCESS_TOKEN` after a token-authenticated operation.
+`uvx` runs the published CLI directly from PyPI, so no persistent installation is needed. Replace `OWNER/REPOSITORY` with the new repository. `gh` must be authenticated and have access to it. Keep this session file for the cookbook workflow; refreshing the API token rotates it and invalidates the old value. The action writes a rotated token back to `MC_API_ACCESS_TOKEN` after a token-authenticated operation.
 
 ### GitHub secret-writing token
 
